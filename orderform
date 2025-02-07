@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Product Order Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .product {
+            background: #f9f9f9;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 10px;
+        }
+        .checkbox-group label {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .checkbox-group input[type="radio"] {
+            display: none;
+        }
+        .checkbox-group input[type="radio"]:checked + label {
+            background: #28a745;
+            color: white;
+            border-color: #218838;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Form</h2>
+        <form id="orderForm">
+            <label>Name:</label> <input type="text" id="name" required><br><br>
+            <label>Phone:</label> <input type="text" id="phone" required oninput="convertToEnglish(this)"><br><br>
+            <label>Address:</label> <input type="text" id="address" required><br><br>
+            <label>COD Amount:</label> <input type="number" id="cod" required oninput="convertToEnglish(this)"><br><br>
+            
+            <div id="products"></div>
+            <button type="button" onclick="addProduct()">Add More Product</button><br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function convertToEnglish(input) {
+            const banglaToEnglish = {"০": "0", "১": "1", "২": "2", "৩": "3", "৪": "4", "৫": "5", "৬": "6", "৭": "7", "৮": "8", "৯": "9"};
+            input.value = input.value.replace(/[০-৯]/g, function(m) { return banglaToEnglish[m]; });
+        }
+
+        let productCount = 0;
+
+        function addProduct() {
+            productCount++;
+            let productDiv = document.createElement('div');
+            productDiv.classList.add('product');
+            
+            productDiv.innerHTML = `
+                <label>Product Type:</label><br>
+                <div class="checkbox-group">
+                    <input type="radio" class="productType" name="product_${productCount}" value="Star" id="star_${productCount}">
+                    <label for="star_${productCount}">Star</label>
+                    <input type="radio" class="productType" name="product_${productCount}" value="Pata" id="pata_${productCount}">
+                    <label for="pata_${productCount}">Pata</label>
+                    <input type="radio" class="productType" name="product_${productCount}" value="Disha" id="disha_${productCount}">
+                    <label for="disha_${productCount}">Disha</label>
+                </div><br>
+                
+                <label>Color:</label>
+                <div class="checkbox-group">
+                    <input type="radio" name="color_${productCount}" value="Black" id="black_${productCount}">
+                    <label for="black_${productCount}">Black</label>
+                    <input type="radio" name="color_${productCount}" value="Nude" id="nude_${productCount}">
+                    <label for="nude_${productCount}">Nude</label>
+                    <input type="radio" name="color_${productCount}" value="Green" id="green_${productCount}">
+                    <label for="green_${productCount}">Green</label>
+                    <input type="radio" name="color_${productCount}" value="Sky" id="sky_${productCount}">
+                    <label for="sky_${productCount}">Sky</label>
+                </div><br>
+                
+                <label>Size:</label>
+                <div class="checkbox-group">
+                    <input type="radio" name="size_${productCount}" value="50" id="size50_${productCount}">
+                    <label for="size50_${productCount}">50</label>
+                    <input type="radio" name="size_${productCount}" value="52" id="size52_${productCount}">
+                    <label for="size52_${productCount}">52</label>
+                    <input type="radio" name="size_${productCount}" value="54" id="size54_${productCount}">
+                    <label for="size54_${productCount}">54</label>
+                    <input type="radio" name="size_${productCount}" value="56" id="size56_${productCount}">
+                    <label for="size56_${productCount}">56</label>
+                    <input type="radio" name="size_${productCount}" value="58" id="size58_${productCount}">
+                    <label for="size58_${productCount}">58</label>
+                </div><br>
+                
+                <label>Hijab:</label>
+                <div class="checkbox-group">
+                    <input type="radio" name="hijab_${productCount}" value="Yes" id="hijab_yes_${productCount}">
+                    <label for="hijab_yes_${productCount}">Yes</label>
+                    <input type="radio" name="hijab_${productCount}" value="No" id="hijab_no_${productCount}">
+                    <label for="hijab_no_${productCount}">No</label>
+                </div>
+            `;
+            document.getElementById('products').appendChild(productDiv);
+        }
+    </script>
+</body>
+</html>
